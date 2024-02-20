@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../config/database');
 const APIController = require('../controllers/apiController')
-const { postCreateCustomer } = require("../controllers/customerController")
+const { postCreateCustomer, postCreateCustomers, getAllCustomers, updateCustomer, deleteACustomer } = require("../controllers/customerController")
 
 const initAPIRoute = () => {
     router.get('/users', APIController.getAllUsers);
@@ -14,6 +14,11 @@ const initAPIRoute = () => {
     router.post('/files', APIController.postUploadMultipleFileAPI);
 
     router.post('/customer', postCreateCustomer);
+    router.post('/customers', postCreateCustomers);
+    router.get('/allcustomers', getAllCustomers);
+    router.post('/update-customer-api', updateCustomer); //method PUT -> UPDATE data
+    router.delete('/customer', deleteACustomer);
+
 
 
     return router;
