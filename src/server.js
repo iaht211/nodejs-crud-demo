@@ -5,10 +5,17 @@ const configViewEngine = require('./config/viewEngine');
 const webRoutes = require('./routes/web');
 const { connection } = require('./config/database');
 const mongoose = require('mongoose')
+const fileUpload = require('express-fileupload');
+
 const app = express()
 const initAPIRoute = require('./routes/api')
 const port = process.env.PORT;
 const hostname = process.env.HOST_NAME;
+
+//config file upload
+app.use(fileUpload());
+
+
 app.use(express.json()) // for json
 app.use(express.urlencoded({ extended: true })) // for form data
 
