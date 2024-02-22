@@ -6,6 +6,7 @@ const webRoutes = require('./routes/web');
 const { connection } = require('./config/database');
 const mongoose = require('mongoose')
 const fileUpload = require('express-fileupload');
+const { MongoClient } = require('mongodb');
 
 const app = express()
 const initAPIRoute = require('./routes/api')
@@ -30,7 +31,18 @@ app.use('/api/v1', initAPIRoute());
 
 (async () => {
     try {
-        // test db
+        // using mongodb
+        const url = process.env.DB_HOST_WITH_DIRVER;
+        const client = new MongoClient(url);
+        // Database Name
+        const dbName = process.env.DB_NAME;
+        await client.connect();
+        console.log('Connected successfully to server');
+        const db = client.db(dbName);
+        const collection = db.collection('customers');
+        let a = await collection.findOne({ "address": "ha noi" })
+        console.log(">>> check find", a);
+        // using mongoose
         await connection();
         app.listen(port, () => {
             console.log(`Example app listening on port ${port}`)
