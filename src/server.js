@@ -39,10 +39,7 @@ app.use('/api/v1', initAPIRoute());
         await client.connect();
         console.log('Connected successfully to server');
         const db = client.db(dbName);
-        const collection = db.collection('customers');
-        let a = await collection.findOne({ "address": "ha noi" })
-        console.log(">>> check find", a);
-        // using mongoose
+
         await connection();
         app.listen(port, () => {
             console.log(`Example app listening on port ${port}`)

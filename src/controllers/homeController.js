@@ -1,6 +1,6 @@
 const pool = require('../config/database');
 const { getAllUsers, getUserById, updateUserById, deleteUserById } = require('../services/CRUDService');
-const User = require('../models/users')
+const User = require('../models/user')
 const getHomepage = async (req, res) => {
     let rows = await User.find({});
     return res.render('home.ejs', { listUsers: rows })

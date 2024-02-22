@@ -3,12 +3,13 @@ const router = express.Router();
 const pool = require('../config/database');
 const APIController = require('../controllers/apiController')
 const { postCreateCustomer, postCreateCustomers, getAllCustomers, updateCustomer, deleteACustomer, postDeleteCustomers } = require("../controllers/customerController")
-
+const { postCreateProject, getAllProject } = require("../controllers/projectController");
+const { get } = require('mongoose');
 const initAPIRoute = () => {
     router.get('/users', APIController.getAllUsers);
-    router.post('/create-user-api', APIController.createNewUser); // method POST -> CREATE data
-    router.post('/update-user-api', APIController.updateUser); //method PUT -> UPDATE data
-    router.post('/delete-user-api/:id', APIController.deleteUser); //method DELETE -> DELETE data
+    router.post('/users', APIController.createNewUser); // method POST -> CREATE data
+    router.patch('/users', APIController.updateUser); //method PUT -> UPDATE data
+    router.delete('/users/:id', APIController.deleteUser); //method DELETE -> DELETE data
 
     router.post('/file', APIController.postUploadSingleFileAPI);
     router.post('/files', APIController.postUploadMultipleFileAPI);
@@ -32,6 +33,9 @@ const initAPIRoute = () => {
             data
         })
     })
+
+    router.post('/projects', postCreateProject);
+    router.get('/projects', getAllProject);
 
     return router;
 }

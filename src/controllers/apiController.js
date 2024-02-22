@@ -1,12 +1,12 @@
 const pool = require('../config/database')
-const User = require('../models/users')
+const User = require('../models/user')
 const { uploadSingleFile, uploadMultiFiles } = require('../services/fileService')
 const getAllUsers = async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM users');
+        const result = await User.find({})
         return res.status(200).json({
             message: 'ok',
-            data: result.rows
+            data: result
         });
     } catch (error) {
         console.log('error fetching users:', error);
@@ -28,7 +28,8 @@ const createNewUser = async (req, res) => {
             city: city
         })
         return res.status(201).json({
-            message: 'User created successfully'
+            message: 'User created successfully',
+            data: result
         });
     } catch (error) {
         console.error('Error creating user:', error);
@@ -55,8 +56,9 @@ const updateUser = async (req, res) => {
 };
 const deleteUser = async (req, res) => {
     try {
-        const userId = req.params.id;
-        const result = await User.deleteOne({ _id: userId });
+        const userId = req.body.id;
+        console.log(">>> check user id :", userId)
+        let result = await User.deleteOne({ _id: userId });
         return res.status(200).json({
             message: 'ok',
             data: result.rows
