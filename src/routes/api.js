@@ -4,6 +4,7 @@ const pool = require('../config/database');
 const APIController = require('../controllers/apiController')
 const { postCreateCustomer, postCreateCustomers, getAllCustomers, updateCustomer, deleteACustomer, postDeleteCustomers } = require("../controllers/customerController")
 const { postCreateProject, getAllProject } = require("../controllers/projectController");
+const { postCreateTask, getAllTask, updateTask, deleteTask } = require('../controllers/taskController')
 const { get } = require('mongoose');
 const initAPIRoute = () => {
     router.get('/users', APIController.getAllUsers);
@@ -36,6 +37,10 @@ const initAPIRoute = () => {
 
     router.post('/projects', postCreateProject);
     router.get('/projects', getAllProject);
+    router.post('/tasks', postCreateTask);
+    router.get('/tasks', getAllTask);
+    router.put('/tasks', updateTask);
+    router.delete('/tasks', deleteTask);
 
     return router;
 }
