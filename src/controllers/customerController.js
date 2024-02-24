@@ -1,8 +1,29 @@
 const { uploadSingleFile } = require("../services/fileService")
-const { createCustomerService, createArrCustomerService, getAllCustomersService, updateCustomerService, deleteACustomerService, deleteArrCustomerService } = require("../services/customerService")
+const Joi = require('joi');
+const { createCustomerService, createArrCustomerService, getAllCustomersService, updateCustomerService, deleteACustomerService, deleteArrCustomerService } = require("../services/customerService");
+const { validate } = require("../models/user");
 module.exports = {
     postCreateCustomer: async (req, res) => {
         let { name, address, phone, email, image, description } = req.body;
+
+        const schema = Joi.object({
+            name: Joi.string()
+                .min(3)
+                .max(30)
+                .required(),
+
+            address: Joi.string(),
+
+            phone: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+
+            description: Joi.string(),
+
+            email: Joi.string().email()
+        })
+        const result = schema.validate(req.body, { abortEarly: false });
+        console.log('>>> check result:', result);
+        return res.send('ok');
+
         let imageURL = "";
         if (!req.files || Object.keys(req.files).length === 0) {
             return res.status(400).send('No files were uploaded.');

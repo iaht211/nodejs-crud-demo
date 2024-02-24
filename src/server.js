@@ -9,7 +9,8 @@ const fileUpload = require('express-fileupload');
 const { MongoClient } = require('mongodb');
 
 const app = express()
-const initAPIRoute = require('./routes/api')
+const initAPIRoute = require('./routes/api');
+const { collection } = require('./models/user');
 const port = process.env.PORT;
 const hostname = process.env.HOST_NAME;
 
@@ -25,22 +26,19 @@ configViewEngine(app);
 app.use('/', webRoutes);
 app.use('/api/v1', initAPIRoute());
 
-// const cat = new Kitten({ name: 'hoi dan it model' });
-// cat.save();
-
-
 (async () => {
     try {
-        // using mongodb
-        const url = process.env.DB_HOST_WITH_DIRVER;
-        const client = new MongoClient(url);
-        // Database Name
-        const dbName = process.env.DB_NAME;
-        await client.connect();
-        console.log('Connected successfully to server');
-        const db = client.db(dbName);
+        // // using mongodb
+        // const url = process.env.DB_HOST_WITH_DIRVER;
+        // const client = new MongoClient(url);
+        // // Database Name
+        // const dbName = process.env.DB_NAME;
+        // await client.connect();
+        // console.log('Connected successfully to server');
+        // const db = client.db(dbName);
 
-        await connection();
+        connection();
+
         app.listen(port, () => {
             console.log(`Example app listening on port ${port}`)
         })

@@ -3,21 +3,21 @@ const aqp = require('api-query-params');
 
 const createProjectService = async (data) => {
     try {
-        if (data.type == "EMPTY-PROJECT") {
-            let result = await Project.create(data)
-            return 'create project';
-        }
-        if (data.type == "ADD-USER") {
-            console.log(">> check data", data)
-            let myProject = await Project.findById(data.projectId).exec();
-            for (let i = 0; i < data.userArr.length; i++) {
-                myProject.usersInfor.push(data.userArr[i]);
-            }
+        //if (data.type == "EMPTY-PROJECT") {
+        let result = await Project.create(data)
+        return 'create project';
+        //}
+        // if (data.type == "ADD-USER") {
+        //     console.log(">> check data", data)
+        //     let myProject = await Project.findById(data.projectId).exec();
+        //     for (let i = 0; i < data.userArr.length; i++) {
+        //         myProject.usersInfor.push(data.userArr[i]);
+        //     }
 
-            await myProject.save();
-            console.log(myProject);
-            return "ok add user";
-        }
+        //     await myProject.save();
+        //     console.log(myProject);
+        //     return "ok add user";
+        // }
         //console.log(result);
         //return result;
     }
